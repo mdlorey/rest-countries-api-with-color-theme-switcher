@@ -38,6 +38,9 @@ export default {
     }),
   },
   watch: {
+    countries() {
+      this.filter();
+    },
     term() {
       this.filter();
     },
