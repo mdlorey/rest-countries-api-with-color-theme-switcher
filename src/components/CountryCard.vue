@@ -1,23 +1,23 @@
 <template>
   <router-link
-    :to="{ name: 'Details', params: { name: country.name } }"
+    :to="{ name: 'Details', params: { name: country.cca2 } }"
     class="card"
   >
     <div
       class="card-image"
-      :style="{ backgroundImage: `url(${country.flag})` }"
+      :style="{ backgroundImage: `url(${country.flags.svg})` }"
     ></div>
     <div class="card-content">
-      <h2>{{ country.name }}</h2>
+      <h2>{{ country.name.common }}</h2>
       <ul>
-        <li>
+        <li v-if="country.population">
           <strong>Population:</strong> {{ numberWithCommas(country.population) }}
         </li>
-        <li>
+        <li v-if="country.region">
           <strong>Region:</strong> {{ country.region }}
         </li>
-        <li>
-          <strong>Capital:</strong> {{ country.capital }}
+        <li v-if="country.capital">
+          <strong>Capital:</strong> {{ country.capital[0] }}
         </li>
       </ul>
     </div>

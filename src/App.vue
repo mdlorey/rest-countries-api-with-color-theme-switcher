@@ -170,6 +170,9 @@ body {
     background-color: var(--dark-blue);
     transition: background-color 0.3s ease-in-out;
   }
+  .vs__search::placeholder {
+    color: var(--white);
+  }
 }
 
 .container {

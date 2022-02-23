@@ -5,19 +5,23 @@
         <arrow-left /> Back
       </button>
     </div>
+
     <div class="country-details row">
       <div class="country-flag col-6">
-        <img class="img-fluid" :src="country.flag" />
+        <img v-if="country.flags" class="img-fluid" :src="country.flags.svg" />
       </div>
       <div class="country-content col">
-        <div class="country-name">
-          {{ country.name }}
+        <div v-if="country.name" class="country-name">
+          {{ country.name.common }}
         </div>
         <div class="row">
           <div class="col">
             <ul>
-              <li>
-                <strong>Native Name:</strong> {{ country.nativeName }}
+              <li v-if="country.name">
+                <strong>Official Name:</strong> {{ country.name.official }}
+              </li>
+              <li v-if="country.name && country.name.common !== country.name.official">
+                <strong>Common Name:</strong> {{ country.name.common }}
               </li>
               <li>
                 <strong>Population:</strong> {{ numberWithCommas(country.population) }}
@@ -28,12 +32,12 @@
               <li>
                 <strong>Sub Region:</strong> {{ country.subregion }}
               </li>
-              <li>
-                <strong>Capital:</strong> {{ country.capital }}
+              <li v-if="country.capital">
+                <strong>Capital:</strong> {{ country.capital[0] }}
               </li>
             </ul>
           </div>
-          <div class="col">
+          <!-- <div class="col">
             <ul>
               <li>
                 <strong>Top Level Domain:</strong> {{ arrayAsString(country.topLevelDomain) }}
@@ -45,9 +49,9 @@
                 <strong>Languages:</strong> {{ arrayAsString(country.languages, 'name') }}
               </li>
             </ul>
-          </div>
+          </div> -->
         </div>
-        <div class="border-countries">
+        <!-- <div class="border-countries">
           <strong>Border Countries: </strong>
           <div class="inline-buttons" v-if="country.borders && country.borders.length">
             <router-link
@@ -60,7 +64,7 @@
             </router-link>
           </div>
           <template v-else>None</template>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -75,7 +79,7 @@ export default {
     ArrowLeft,
   },
   computed: {
-    countryName() {
+    countryCode() {
       let name = null;
       if (this.$route.params.name) {
         name = this.$route.params.name;
@@ -84,8 +88,8 @@ export default {
     },
     country() {
       let country = [];
-      if (this.countryName) {
-        country = this.$store.getters.getCountry(this.countryName);
+      if (this.countryCode) {
+        country = this.$store.getters.getCountry(this.countryCode);
       }
       return country;
     },

@@ -23,7 +23,7 @@ export default new Vuex.Store({
     regions: ['Africa', 'Americas', 'Asia', 'Europe', 'Oceania'],
   },
   getters: {
-    getCountry: (state) => (name) => state.countries.find((country) => country.name === name),
+    getCountry: (state) => (cca2) => state.countries.find((country) => country.cca2 === cca2),
   },
   mutations: {
     setCountries(state, countries) {
@@ -47,7 +47,7 @@ export default new Vuex.Store({
   },
   actions: {
     async set({ commit }) {
-      const { data } = await Axios.get('https://restcountries.eu/rest/v2/all');
+      const { data } = await Axios.get('https://restcountries.com/v3.1/all');
       commit('setCountries', data);
       commit('setCountryList', data);
     },
