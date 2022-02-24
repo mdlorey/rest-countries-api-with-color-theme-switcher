@@ -58,10 +58,10 @@ export default {
         regionFiltered = regionFiltered
           .filter((country) => country.region === this.region);
       }
-      if (this.term) {
-        this.$search(this.term, regionFiltered, this.options).then((results) => {
-          this.filteredCountries = results;
-        });
+      if (this.term !== '' && this.term) {
+        this.filteredCountries = regionFiltered.filter((item) => item.name.common
+          .toUpperCase()
+          .includes(this.term.toUpperCase()));
       } else {
         this.filteredCountries = regionFiltered;
       }
